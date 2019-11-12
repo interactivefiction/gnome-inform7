@@ -317,7 +317,7 @@ i7_cell_renderer_transcript_render(GtkCellRenderer *self, GdkWindow *window, Gtk
 
 	/* Get a cairo context to draw the rectangles on directly; use GTK themed
 	 drawing to draw everything else */
-	cr = gdk_cairo_create(GDK_DRAWABLE(window));
+	cr = gdk_cairo_create(window);
 
 	/* Draw the command */
 	layout = gtk_widget_create_pango_layout(widget, priv->command);
@@ -327,7 +327,7 @@ i7_cell_renderer_transcript_render(GtkCellRenderer *self, GdkWindow *window, Gtk
 	cairo_rectangle(cr, (double)x, (double)y, 
 	    (double)width, (double)(command_rect.height + priv->text_padding * 2));
 	cairo_fill(cr);
-	gtk_paint_layout(style, window, state, TRUE, cell_area, widget, NULL, 
+	gtk_paint_layout(style, cr, state, TRUE, widget, NULL,
 	    	x + priv->text_padding, y + priv->text_padding, 
 	    	layout);
 	g_object_unref(layout);
@@ -349,7 +349,7 @@ i7_cell_renderer_transcript_render(GtkCellRenderer *self, GdkWindow *window, Gtk
 	pango_layout_set_markup(layout, priv->transcript_text, -1);
 	pango_layout_set_width(layout, (int)(transcript_width - priv->text_padding * 2) * PANGO_SCALE);
 	pango_layout_set_wrap(layout, PANGO_WRAP_WORD_CHAR);
-	gtk_paint_layout(style, window, state, TRUE, cell_area, widget, NULL, 
+	gtk_paint_layout(style, cr, state, TRUE, widget, NULL,
 	    x + (int)priv->text_padding, 
 	    y + command_rect.height + (int)priv->text_padding * 3, 
 		layout);
@@ -382,17 +382,17 @@ i7_cell_renderer_transcript_render(GtkCellRenderer *self, GdkWindow *window, Gtk
 	pango_layout_set_markup(layout, priv->expected_text, -1);
 	pango_layout_set_width(layout, (int)(transcript_width - priv->text_padding * 2) * PANGO_SCALE);
 	pango_layout_set_wrap(layout, PANGO_WRAP_WORD_CHAR);
-	gtk_paint_layout(style, window, state, TRUE, cell_area, widget, NULL,
+	gtk_paint_layout(style, cr, state, TRUE, widget, NULL,
 	    x + width / 2 + (int)priv->text_padding, 
 	    y + command_rect.height + (int)priv->text_padding * 3, 
 		layout);
 	g_object_unref(layout);
 
 	/* Draw some lines */
-	gtk_paint_hline(style, window, state, cell_area, widget, NULL, 
+	gtk_paint_hline(style, cr, state, widget, NULL,
 	    x, x + width, 
 	    y + command_rect.height + priv->text_padding * 2);
-	gtk_paint_vline(style, window, state, cell_area, widget, NULL, 
+	gtk_paint_vline(style, cr, state, widget, NULL,
 	    y + command_rect.height + priv->text_padding * 2, y + height, 
 	    x + width / 2);
 	
