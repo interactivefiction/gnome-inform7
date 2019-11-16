@@ -4,6 +4,7 @@
 [submodule "src/chimara"]
 	path = src/chimara
 	url = http://git.stderr.nl/projects/chimara/chimara.git
+	branch = gtk2
 [submodule "src/goocanvas"]
 	path = src/goocanvas
 	url = https://github.com/interactivefiction/gnome-inform7-goocanvas.git
